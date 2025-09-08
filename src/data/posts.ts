@@ -1,23 +1,5 @@
 const data = [
   {
-    id: 1,
-    postTitle: 'poat--1',
-    postDescription: 'poat--1',
-    imgSrc: 'http://localhost:3000/images/a.jpg',
-    imgAlt: 'poat--1',
-    likesNumber: 1,
-    timestamp: 'poat--1',
-  },
-  {
-    id: 2,
-    postTitle: 'poat--2',
-    postDescription: 'poat--2',
-    imgSrc: 'http://localhost:3000/images/b.jpg',
-    imgAlt: 'poat--2',
-    likesNumber: 2,
-    timestamp: 'poat--2',
-  },
-  {
     id: 3,
     postTitle: 'poat--3',
     postDescription: 'poat--3',
