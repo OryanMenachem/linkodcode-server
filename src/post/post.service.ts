@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import data from 'src/data/posts';
 
 @Injectable()
 export class PostService {
@@ -9,7 +10,7 @@ export class PostService {
   }
 
   findAll() {
-    return `This action returns all post`;
+    return data;
   }
 
   findOne(id: number) {
