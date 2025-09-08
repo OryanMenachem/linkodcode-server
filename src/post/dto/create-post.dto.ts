@@ -20,8 +20,4 @@ export class CreatePostDto {
   @IsNumber()
   @IsNotEmpty()
   likesNumber: number;
-
-  @IsString()
-  @IsNotEmpty()
-  timestamp: string;
 }
