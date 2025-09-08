@@ -17,7 +17,6 @@ export class PostService {
       imgSrc,
       imgAlt,
       likesNumber,
-      timestamp,
     } = createPostDto;
 
     const { data: insertedPost, error } = await supabase
@@ -28,7 +27,6 @@ export class PostService {
         imgSrc,
         imgAlt,
         likesNumber,
-        timestamp,
       })
       .select()
       .single();
