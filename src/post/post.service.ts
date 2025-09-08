@@ -1,15 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import data from 'src/data/posts';
+import { SupabaseService } from '../supabase/supabase.service';
+import { Post } from './entities/post.entity';
 
 @Injectable()
 export class PostService {
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  private readonly TABLE_NAME = 'posts';
+  constructor(private readonly supabaseService: SupabaseService) {}
+
+  async create(createPostDto: CreatePostDto) {
+    const supabase = this.supabaseService.getClient();
+    const {
+      postTitle,
+      postDescription,
+      imgSrc,
+      imgAlt,
+      likesNumber,
+      timestamp,
+    } = createPostDto;
+
+    const { data: insertedPost, error } = await supabase
+      .from(this.TABLE_NAME)
+      .insert({
+        postTitle,
+        postDescription,
+        imgSrc,
+        imgAlt,
+        likesNumber,
+        timestamp,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to create player: ${error.message}`);
+    }
+    return insertedPost;
   }
 
-  findAll() {
+  async findAll(): Promise<Post[]> {
+    const supabase = this.supabaseService.getClient();
+    const { data, error } = await supabase.from(this.TABLE_NAME).select('*');
+
+    if (error) {
+      throw new Error(`Failed to fetch players: ${error.message}`);
+    }
     return data;
   }
 
