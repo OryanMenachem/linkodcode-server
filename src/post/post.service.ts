@@ -9,7 +9,7 @@ export class PostService {
   private readonly TABLE_NAME = 'posts';
   constructor(private readonly supabaseService: SupabaseService) {}
 
-  async create(createPostDto: CreatePostDto) {
+  async create(createPostDto: CreatePostDto): Promise<Post> {
     const supabase = this.supabaseService.getClient();
     const {
       postTitle,
@@ -17,6 +17,7 @@ export class PostService {
       imgSrc,
       imgAlt,
       likesNumber,
+      timestamp,
     } = createPostDto;
 
     const { data: insertedPost, error } = await supabase
@@ -27,13 +28,16 @@ export class PostService {
         imgSrc,
         imgAlt,
         likesNumber,
+        timestamp,
       })
       .select()
       .single();
 
     if (error) {
-      throw new Error(`Failed to create player: ${error.message}`);
+      throw new Error(error.message);
     }
+    console.log(insertedPost);
+
     return insertedPost;
   }
 
@@ -42,13 +46,24 @@ export class PostService {
     const { data, error } = await supabase.from(this.TABLE_NAME).select('*');
 
     if (error) {
-      throw new Error(`Failed to fetch players: ${error.message}`);
+      throw new Error(error.message);
     }
     return data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    const supabase = this.supabaseService.getClient();
+    const { data, error } = await supabase
+      .from(this.TABLE_NAME)
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) {
+      throw new Error(error.message);
+    }
+    console.log(data);
+
+    return data;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
