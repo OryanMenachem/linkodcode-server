@@ -23,6 +23,7 @@ export class PostController {
   @Get()
   findAll() {
     return this.postService.findAll();
+    
   }
 
   @Get(':id')
