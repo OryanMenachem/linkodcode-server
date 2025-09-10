@@ -37,7 +37,6 @@ export class PostService {
       throw new Error(error.message);
     }
 
-
     return insertedPost;
   }
 
@@ -65,13 +64,19 @@ export class PostService {
     return post;
   }
 
-  
-
   update(id: number, updatePostDto: UpdatePostDto) {
     return `This action updates a #${id} post`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    const supabase = this.supabaseService.getClient();
+    const { error } = await supabase
+      .from(this.TABLE_NAME)
+      .delete()
+      .eq('id', id);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return 'The post was successfully deleted!';
   }
 }
