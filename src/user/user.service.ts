@@ -30,12 +30,51 @@ export class UserService {
     return insertedUser;
   }
 
-  async findAll() {
-    return `This action returns all user`;
+  async findAll(): Promise<User[]> {
+    const supabase = this.supabaseService.getClient();
+    const { data: users, error } = await supabase
+      .from(this.TABLE_NAME)
+      .select('*');
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return users;
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} user`;
+    const supabase = this.supabaseService.getClient();
+    const { data: user, error } = await supabase
+      .from(this.TABLE_NAME)
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return user;
+  }
+
+  async findByCredentials(createUserDto: CreateUserDto): Promise<User> {
+    const supabase = this.supabaseService.getClient();
+    const { username, password } = createUserDto;
+
+    const { data: user, error } = await supabase
+      .from(this.TABLE_NAME)
+      .select('*')
+      .eq('username', username)
+      .single();
+    if (error) {
+      throw new Error(error.message);
+    }
+    const isMatch = await bcrypt.compare(password, user.hashed_password);
+
+    if (isMatch) {
+      return user;
+    } else {
+      throw new Error('Incorrect password!');
+    }
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
