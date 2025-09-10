@@ -24,6 +24,7 @@ export class AuthService {
   async signUp(createUserDto: CreateUserDto): Promise<any> {
     try {
       const user = await this.usersService.create(createUserDto);
+
       const token = this.generateToken(user);
       return token;
     } catch (error) {
