@@ -4,8 +4,7 @@
 
 ## Description
 
-Server-side Linkodcode (nestjs), for handling API requests, and performing authenticationServer-side Linqcode (nestjs), for handling API requests, and performing authentication.
-
+Server-side Linkodcode (nestjs), for handling API requests, and performing authentication.
 ## Project setup
 
 ```bash
