@@ -53,7 +53,7 @@ export class PostService {
 
   async findOne(id: number) {
     const supabase = this.supabaseService.getClient();
-    const { data, error } = await supabase
+    const { data: post, error } = await supabase
       .from(this.TABLE_NAME)
       .select('*')
       .eq('id', id)
@@ -61,9 +61,8 @@ export class PostService {
     if (error) {
       throw new Error(error.message);
     }
-    console.log(data);
 
-    return data;
+    return post;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {

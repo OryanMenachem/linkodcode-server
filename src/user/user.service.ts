@@ -30,12 +30,31 @@ export class UserService {
     return insertedUser;
   }
 
-  async findAll() {
-    return `This action returns all user`;
+  async findAll(): Promise<User[]> {
+    const supabase = this.supabaseService.getClient();
+    const { data: users, error } = await supabase
+      .from(this.TABLE_NAME)
+      .select('*');
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return users;
   }
 
+  
   async findOne(id: number) {
-    return `This action returns a #${id} user`;
+    const supabase = this.supabaseService.getClient();
+    const { data: user, error } = await supabase
+      .from(this.TABLE_NAME)
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
