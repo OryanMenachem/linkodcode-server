@@ -10,7 +10,6 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import * as Joi from 'joi';
 
-
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -18,6 +17,7 @@ import * as Joi from 'joi';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '.env',
       validationSchema: Joi.object({
         SUPABASE_URI: Joi.string().uri().required(),
         SUPABASE_ANON_KEY: Joi.string().required(),
