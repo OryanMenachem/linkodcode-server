@@ -36,7 +36,7 @@ export class PostService {
     if (error) {
       throw new Error(error.message);
     }
-    console.log(insertedPost);
+
 
     return insertedPost;
   }

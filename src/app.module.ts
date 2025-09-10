@@ -6,6 +6,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 import * as Joi from 'joi';
 
 
@@ -25,6 +27,10 @@ import * as Joi from 'joi';
     PostModule,
 
     SupabaseModule,
+
+    AuthModule,
+
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
